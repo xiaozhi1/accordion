@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>手风琴</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <ul class="firstMenu">
+    <!-- <li>
+      <span class="firstTitle">菜单1</span>
+      <ul class="secondMenu">
+        <li>
+          <span class="secondTitle">子菜单1</span>
+          <ul>
+            <li>孙菜单1</li>
+            <li>孙菜单1</li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="secondMenu">
+        <li>
+          <span class="secondTitle">子菜单1</span>
+          <ul>
+            <li>孙菜单1</li>
+            <li>孙菜单1</li>
+          </ul>
+        </li>
+      </ul>
+    </li> -->
+  </ul>
+
+  <script src="./jquery-1.10.2.js"></script>
+  <script>
+
+    var array = []
+    function tag(tagName) {
+      return document.createElement(tagName)
+    }
+    function ajax_json() {
+      $.ajax({
+        url: "data.json",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+          array = data
+          var First = array.first
+          var ulDom = $('.firstMenu')
+          for (var index = 0; index < First.length; index++) {
+            var li = tag('li')
+            var span = tag('span')
+            span.innerHTML = First[index].name
+            span.className = 'firstTitle'
+            li.appendChild(span)
+            ulDom.append(li)
+            for (var index2 = 0; index2 < First[index].second.length; index2++) {
+              var secondMenuUl = tag('ul')
+              secondMenuUl.className = 'secondMenu'
+              var secondMenuLI = tag('li')
+              secondMenuUl.appendChild(secondMenuLI)
+              var secondSpan = tag('span')
+              secondSpan.className = 'secondTitle'
+              secondSpan.innerHTML = First[index].second[index2].name
+              secondMenuLI.appendChild(secondSpan)
+              li.appendChild(secondMenuUl)
+              var thirdUl = tag('ul')
+              secondMenuLI.appendChild(thirdUl)
+              for (var index3 = 0; index3 < First[index].second[index2].third.length; index3++) {
+                var thirdLI = tag('li')
+                thirdLI.innerHTML = First[index].second[index2].third[index3].name
+                thirdUl.appendChild(thirdLI)
+              }
+            }
+          }
+
+        }
+      })
+    }
+    ajax_json();
+
+    setTimeout(() => {
+      $('.firstTitle').on('click', function () {
+        $(this).siblings().toggle()
+      })
+      $('.secondTitle').on('click', function () {
+        $(this).siblings().toggle()
+      })
+    }, 1000);
+
+  </script>
+</body>
+
+</html>

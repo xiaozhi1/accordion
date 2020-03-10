@@ -1,0 +1,9 @@
+ul,li{
+    list-style: none;
+}
+.firstMenu ul{
+    display: none;
+}
+span{
+    cursor: pointer;
+}
